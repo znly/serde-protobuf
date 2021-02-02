@@ -827,7 +827,7 @@ mod test {
 
     fn load_descriptors() -> Descriptors {
         let mut file = fs::File::open("testdata/descriptors.pb").unwrap();
-        let proto = protobuf::Message::parse_from_reader(&mut file).unwrap();
+        let proto = protobuf::parse_from_reader(&mut file).unwrap();
 
         Descriptors::from_proto(&proto)
     }
