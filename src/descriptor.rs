@@ -39,7 +39,7 @@
 //! # }
 //! # fn foo() -> Result<(), Error> {
 //! let mut file = fs::File::open("testdata/descriptors.pb")?;
-//! let proto = protobuf::parse_from_reader(&mut file)?;
+//! let proto = protobuf::Message::parse_from_reader(&mut file)?;
 //! let descriptors = Descriptors::from_proto(&proto);
 //! # Ok(())
 //! # }
@@ -84,7 +84,7 @@
 //! # use serde_protobuf::descriptor::Descriptors;
 //! # fn main() {
 //! # let mut file = fs::File::open("testdata/descriptors.pb").unwrap();
-//! # let proto = protobuf::parse_from_reader(&mut file).unwrap();
+//! # let proto = protobuf::Message::parse_from_reader(&mut file).unwrap();
 //! // Given a set of descriptors using one of the above methods:
 //! let descriptors = Descriptors::from_proto(&proto);
 //! assert_eq!(7, descriptors.message_by_name(".protobuf_unittest.TestAllTypes").unwrap()
@@ -106,7 +106,7 @@
 //! # use serde_protobuf::descriptor::*;
 //! # fn main() {
 //! # let mut file = fs::File::open("testdata/descriptors.pb").unwrap();
-//! # let proto = protobuf::parse_from_reader(&mut file).unwrap();
+//! # let proto = protobuf::Message::parse_from_reader(&mut file).unwrap();
 //! // Load some descriptors as usual:
 //! let mut descriptors = Descriptors::from_proto(&proto);
 //!
@@ -819,7 +819,7 @@ fn parse_default_value(value: &str, field_type: &InternalFieldType) -> error::Re
 mod test {
     use std::fs;
 
-    use protobuf;
+    use protobuf::{self, descriptor::FileDescriptorSet, Message};
 
     use super::FieldLabel::*;
     use super::FieldType::*;
@@ -827,7 +827,7 @@ mod test {
 
     fn load_descriptors() -> Descriptors {
         let mut file = fs::File::open("testdata/descriptors.pb").unwrap();
-        let proto = protobuf::parse_from_reader(&mut file).unwrap();
+        let proto = FileDescriptorSet::parse_from_reader(&mut file).unwrap();
 
         Descriptors::from_proto(&proto)
     }
