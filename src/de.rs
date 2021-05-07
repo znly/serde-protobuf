@@ -43,7 +43,7 @@
 //! # fn foo() -> Result<(), Error> {
 //! // Load a descriptor registry (see descriptor module)
 //! let mut file = fs::File::open("testdata/descriptors.pb")?;
-//! let proto = protobuf::parse_from_reader(&mut file)?;
+//! let proto = protobuf::Message::parse_from_reader(&mut file)?;
 //! let descriptors = Descriptors::from_proto(&proto);
 //!
 //! // Set up some data to read
